@@ -55,5 +55,10 @@ int main() {
 		}
 		std::cout << std::endl;
 	}
+	
+	// Free the memory you allocated for the CSV object
+	delete csv;
+
+	return 0;
 }
 ```

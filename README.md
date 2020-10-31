@@ -14,23 +14,23 @@ Run `cmake --build .` your root folder and it will generate a file named `libotl
 ```cpp
 #include "libs/otl.h"
 int main() {
-	// Instantiate the CSV class with the file name
-	otl::CSV *csv = new otl::CSV("MyFile.csv");
+  // Instantiate the CSV class with the file name
+  otl::CSV *csv = new otl::CSV("MyFile.csv");
 
-	// Initialize every column with name
-	csv->PushHeader("name");
-	csv->PushHeader("email");
-	csv->PushHeader("job");
+  // Initialize every column with name
+  csv->PushHeader("name");
+  csv->PushHeader("email");
+  csv->PushHeader("job");
 
-	// Add lines separated by comma
-	csv->PushLine("John Doe,johndoe@email.com,Dummy");
-	csv->PushLine("Jane Doe,janedoe@email.com,Dummy Female");
-	csv->Write();
+  // Add lines separated by comma
+  csv->PushLine("John Doe,johndoe@email.com,Dummy");
+  csv->PushLine("Jane Doe,janedoe@email.com,Dummy Female");
+  csv->Write();
 
-	// Free the memory you allocated for the CSV object
-	delete csv;
+  // Free the memory you allocated for the CSV object
+  delete csv;
 
-	return 0;
+  return 0;
 }
 ```
 
@@ -40,25 +40,25 @@ int main() {
 #include <iostream>
 #include "libs/otl.h"
 int main() {
-	otl::CSV *csv = new otl::CSV("MyFile.csv");
-	csv->Read();
+  otl::CSV *csv = new otl::CSV("MyFile.csv");
+  csv->Read();
 
-	// Print to stdout every column name first
-	for (auto header: csv->GetHeaders())
-		std::cout << header << "\t";
-	std::cout << std::endl;
+  // Print to stdout every column name first
+  for (auto header: csv->GetHeaders())
+    std::cout << header << "\t";
+  std::cout << std::endl;
 
-	for (int i = 0; i < csv->GetLines().size(); i++) {
-		for (int j = 0; j < csv->GetHeaders().size(); j++) {
-			// Print to stdout every column from current line
-			std::cout << csv->GetLineValue(i, j) << "\t";
-		}
-		std::cout << std::endl;
-	}
+  for (int i = 0; i < csv->GetLines().size(); i++) {
+    for (int j = 0; j < csv->GetHeaders().size(); j++) {
+      // Print to stdout every column from current line
+      std::cout << csv->GetLineValue(i, j) << "\t";
+    }
+    std::cout << std::endl;
+  }
 	
-	// Free the memory you allocated for the CSV object
-	delete csv;
+  // Free the memory you allocated for the CSV object
+  delete csv;
 
-	return 0;
+  return 0;
 }
 ```

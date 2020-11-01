@@ -14,40 +14,40 @@
 #include <fstream>
 
 namespace otl {
-	int indexOf(std::string *pString, std::string pSearch);
+  int indexOf(std::string *pString, std::string pSearch);
 
-	int countChar(std::string *pString, const char *pChar);
+  int countChar(std::string *pString, const char *pChar);
 
-	std::vector<std::string> splitString(std::string pString, std::string pDivider);
+  std::vector<std::string> splitString(std::string pString, std::string pDivider);
 
-	std::string joinString(std::vector<std::string> pStringList, std::string pDivider);
+  std::string joinString(std::vector<std::string> pStringList, std::string pDivider);
 
-	class CSV {
-	public:
-		CSV(std::string pFileName);
-		~CSV();
+  class CSV {
+  public:
+    CSV(std::string pFileName);
+    ~CSV();
 
-		std::vector<std::string> GetHeaders();
-		void PushHeader(std::string pHeader);
-		std::string PopHeader();
-		std::string GetHeader(int pIndex);
-		int GetHeaderIndex(std::string pHeader);
+    std::vector<std::string> GetHeaders();
+    void PushHeader(std::string pHeader);
+    std::string PopHeader();
+    std::string GetHeader(int pIndex);
+    int GetHeaderIndex(std::string pHeader);
 
-		void PushLine(std::string pLine);
-		std::string PopLine();
-		std::vector<std::string> GetLines();
-		std::string GetLine(int pIndex);
-		std::string GetLineValue(int pLineIndex, int pColumnIndex);
+    void PushLine(std::string pLine);
+    std::string PopLine();
+    std::vector<std::string> GetLines();
+    std::string GetLine(int pIndex);
+    std::string GetLineValue(int pLineIndex, int pColumnIndex);
 
-		void Write();
-		void Read();
+    void Write();
+    void Read();
 
-	private:
-		std::fstream mFileStream;
-		std::string mFileName;
-		std::vector<std::string> mHeaders;
-		std::vector<std::string> mLines;
-	};
+  private:
+    std::fstream mFileStream;
+    std::string mFileName;
+    std::vector<std::string> mHeaders;
+    std::vector<std::string> mLines;
+  };
 };
 
 #endif

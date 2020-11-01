@@ -6,6 +6,13 @@
 
 #include "otl.h"
 
+otl::CSV::CSV(std::string pFileName) {
+	this->mFileStream = std::fstream();
+	this->mFileName = pFileName;
+}
+
+otl::CSV::~CSV() {}
+
 int otl::indexOf(std::string *pString, std::string pSearch) {
 	std::size_t searchPosition = pString->find(pSearch);
 	if (searchPosition == std::string::npos) return -1;
@@ -48,13 +55,6 @@ std::string otl::joinString(std::vector<std::string> pStringList, std::string pD
 	joinedString = joinedString.substr(0, joinedString.size()-1);
 	return joinedString;
 }
-
-otl::CSV::CSV(std::string pFileName) {
-	this->mFileStream = std::fstream();
-	this->mFileName = pFileName;
-}
-
-otl::CSV::~CSV() {}
 
 std::vector<std::string> otl::CSV::GetHeaders() {
 	return this->mHeaders;
@@ -106,24 +106,37 @@ std::string otl::CSV::GetLineValue(int pLineIndex, int pColumnIndex) {
 }
 
 void otl::CSV::Write() {
-	this->mFileStream.open(this->mFileName, std::ios::out);
-	this->mFileStream << otl::joinString(this->mHeaders, ",") << "\n";
-	for (auto l: this->mLines) this->mFileStream << l << "\n";
-	this->mFileStream.close();
+	try {
+		this->mFileStream.open(this->mFileName, std::ios::out);
+		this->mFileStream << otl::joinString(this->mHeaders, ",") << "\n";
+		for (auto l: this->mLines) this->mFileStream << l << "\n";
+		this->mFileStream.close();
+	} catch (const char* exception) {
+		std::stringstream exceptionMessage;
+		std::string systemException(exception);
+		exceptionMessage << "Failed to write file " << this->mFileName << ": " << systemException;
+		throw exceptionMessage;
+	}
 }
 
 void otl::CSV::Read() {
-	this->mFileStream.open(this->mFileName, std::ios::in);
-	std::string currentLine;
+  try {
+    this->mFileStream.open(this->mFileName, std::ios::in);
+    std::string currentLine;
 
-	if (std::getline(this->mFileStream, currentLine)) {
-		this->mHeaders = otl::splitString(currentLine, ",");
-	}
+    if (std::getline(this->mFileStream, currentLine)) {
+      this->mHeaders = otl::splitString(currentLine, ",");
+    }
 
-	std::vector<std::string> lineList;
-	while (std::getline(this->mFileStream, currentLine)) {
-		lineList.push_back(currentLine);
-	}
-	this->mLines = lineList;
-	this->mFileStream.close();
+    std::vector<std::string> lineList;
+    while (std::getline(this->mFileStream, currentLine)) {
+      lineList.push_back(currentLine);
+    }
+    this->mLines = lineList;
+    this->mFileStream.close();
+  } catch (const char* exception) {
+		std::stringstream exceptionMessage;
+		std::string systemException(exception);
+		exceptionMessage << "Failed to read file " << this->mFileName << ": " << systemException;
+  }
 }

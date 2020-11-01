@@ -6,3 +6,6 @@ cmake_install.cmake
 
 // Library binary
 *.a
+
+// MACOSX Related files
+.DS_Store

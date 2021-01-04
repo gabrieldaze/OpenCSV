@@ -14,26 +14,26 @@
 #include <fstream>
 
 namespace otl {
-  int indexOf(std::string *pString, std::string pSearch);
+  int indexOf(const std::string &pString, const std::string &pSearch);
 
-  int countChar(std::string *pString, const char *pChar);
+  int countChar(const std::string &pString, const char &pChar);
 
-  std::vector<std::string> splitString(std::string pString, std::string pDivider);
+  std::vector<std::string> splitString(const std::string &pString, const char &pDivider);
 
-  std::string joinString(std::vector<std::string> pStringList, std::string pDivider);
+  std::string joinString(std::vector<std::string> pStringList, const char &pDivider);
 
   class CSV {
   public:
-    CSV(std::string pFileName);
+    CSV(const std::string &pFileName);
     ~CSV();
 
     std::vector<std::string> GetHeaders();
-    void PushHeader(std::string pHeader);
+    void PushHeader(const std::string &pHeader);
     std::string PopHeader();
     std::string GetHeader(int pIndex);
-    int GetHeaderIndex(std::string pHeader);
+    int GetHeaderIndex(const std::string &pHeader);
 
-    void PushLine(std::string pLine);
+    void PushLine(const std::string &pLine);
     std::string PopLine();
     std::vector<std::string> GetLines();
     std::string GetLine(int pIndex);

@@ -9,3 +9,7 @@ cmake_install.cmake
 
 // MACOSX Related files
 .DS_Store
+
+// EMACS related files
+./*~
+./src/*~

@@ -1,4 +1,4 @@
-#include "main.hh"
+#include "csv.hh"
 
 CSV::CSV(const str &file) {
   filename = file;

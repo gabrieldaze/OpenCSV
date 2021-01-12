@@ -1,35 +1,25 @@
 ## OpenCSV
 Simple CSV library written in C++
 ## Building
-Run `cmake --build .` your root folder and it will generate a file named `libotl.a`
-
-## Linking
-- Create a folder inside your C++ project named **libs**
-- Put the **libotl.a** file inside your **libs** folder
-- Add to your **CMakeLists.txt** the line `target_link_libraries(*TARGET_NAME* PUBLIC libs/libotl.a)` where *TARGET_NAME* is the name of your executable target.
+Run `cmake --build .` your root folder and it will generate a file named `libcsv.a`
 
 ## Usage example
 
 ##### Writing a CSV file
 ```cpp
-#include "libs/otl.h"
+#include <iostream>
+
+#include "csv.h"
+
 int main() {
-  // Instantiate the CSV class with the file name
-  otl::CSV *csv = new otl::CSV("MyFile.csv");
+  CSV c = CSV("myfile.csv");
+  c.PushHeader("name");
+  c.PushHeader("job");
 
-  // Initialize every column with name
-  csv->PushHeader("name");
-  csv->PushHeader("email");
-  csv->PushHeader("job");
-
-  // Add lines separated by comma
-  csv->PushLine("John Doe,johndoe@email.com,Dummy");
-  csv->PushLine("Jane Doe,janedoe@email.com,Dummy Female");
-  csv->Write();
-
-  // Free the memory you allocated for the CSV object
-  delete csv;
-
+  c.PushLine("gabriel,programmer");
+  c.PushLine("rachell,physician");
+  c.Write();
+  
   return 0;
 }
 ```
@@ -38,26 +28,21 @@ int main() {
 
 ```cpp
 #include <iostream>
-#include "libs/otl.h"
+
+#include "csv.h"
+
 int main() {
-  otl::CSV *csv = new otl::CSV("MyFile.csv");
-  csv->Read();
+  CSV c = CSV("myfile.csv");
+  c.Read();
+  for (auto &h : c.GetHeaders())
+    std::cout << h << "\t";
+  std::cout << "\n";
 
-  // Print to stdout every column name first
-  for (auto header: csv->GetHeaders())
-    std::cout << header << "\t";
-  std::cout << std::endl;
-
-  for (int i = 0; i < csv->GetLines().size(); i++) {
-    for (int j = 0; j < csv->GetHeaders().size(); j++) {
-      // Print to stdout every column from current line
-      std::cout << csv->GetLineValue(i, j) << "\t";
-    }
-    std::cout << std::endl;
+  for (auto &ln : c.GetLines()) {
+    for (auto &col : c.GetLine(ln))
+      std::cout << col << "\t";
+    std::cout << "\n";
   }
-	
-  // Free the memory you allocated for the CSV object
-  delete csv;
 
   return 0;
 }

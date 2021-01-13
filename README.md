@@ -7,8 +7,6 @@ Run `cmake --build .` your root folder and it will generate a file named `libcsv
 
 ##### Writing a CSV file
 ```cpp
-#include <iostream>
-
 #include "csv.h"
 
 int main() {
@@ -22,6 +20,12 @@ int main() {
   
   return 0;
 }
+```
+##### The output file after writing
+```
+name,job
+gabriel,programmer
+rachell,physician
 ```
 
 ##### Reading from CSV file
@@ -46,4 +50,10 @@ int main() {
 
   return 0;
 }
+```
+##### The output will be
+```
+name	job
+gabriel	programmer
+rachell	physician
 ```

@@ -1,33 +1,33 @@
 #include "csv.hh"
 
-CSV::CSV(const str &file) {
+CSV::CSV(const std::string &file) {
   filename = file;
-  filehandler = cfile();
+  filehandler = std::fstream();
   separator = ',';
 }
 
-CSV::CSV(const str &file, const char &s) {
+CSV::CSV(const std::string &file, const char &s) {
   filename = file;
-  filehandler = cfile();
+  filehandler = std::fstream();
   separator = s;
 }
 
-int CSV::index_of(const str &text, const str &search) {
+int CSV::index_of(const std::string &text, const std::string &search) {
   std::size_t pos = text.find(search);
   if (pos == std::string::npos) return -1;
   return (int) pos;
 }
 
-str CSV::join_string(const vec<str> &list, const char &divider) {
-  str s = "";
-  for (auto &item : list) s += item + str(1, divider);
+std::string CSV::join_string(const std::vector<std::string> &list, const char &divider) {
+  std::string s = "";
+  for (auto &item : list) s += item + std::string(1, divider);
   s = s.substr(0, s.size() - 1);
   return s;
 }
 
-vec<str> CSV::split_string(const str &text, const char &div) {
-  vec<str> v;
-  str sub, seq;
+std::vector<std::string> CSV::split_string(const std::string &text, const char &div) {
+  std::vector<std::string> v;
+  std::string sub, seq;
 
   if (text.at(text.size() - 1) == div) {
     sub = text.substr(0, text.size() - 1);
@@ -38,7 +38,7 @@ vec<str> CSV::split_string(const str &text, const char &div) {
     seq = sub.substr(0, divider);
     sub = sub.substr(divider + 1);
     v.push_back(seq);
-    divider = index_of(sub, str(1, div));
+    divider = index_of(sub, std::string(1, div));
   }
 
   v.push_back(sub);
@@ -46,59 +46,59 @@ vec<str> CSV::split_string(const str &text, const char &div) {
 }
 
 
-void CSV::PushHeader(const str &header) {
+void CSV::PushHeader(const std::string &header) {
   headers.push_back(header);
 }
 
-str CSV::PopHeader() {
-  str h = headers.back();
+std::string CSV::PopHeader() {
+  std::string h = headers.back();
   headers.pop_back();
   return h;
 }
 
-vec<str> CSV::GetHeaders() {
+std::vector<std::string> CSV::GetHeaders() {
   return headers;
 }
 
-str CSV::GetHeader(int index) {
+std::string CSV::GetHeader(int index) {
   return headers.at(index);
 }
 
-int CSV::GetHeaderIndex(const str &header) {
+int CSV::GetHeaderIndex(const std::string &header) {
   for (int i = 0; i < headers.size(); i++)
     if (header == headers.at(i)) return i;
   return -1;
 }
 
-void CSV::PushLine(const str &line) {
+void CSV::PushLine(const std::string &line) {
   lines.push_back(line);
 }
 
-str CSV::PopLine() {
-  str l = lines.back();
+std::string CSV::PopLine() {
+  std::string l = lines.back();
   lines.pop_back();
   return l;
 }
 
-vec<str> CSV::GetLines() {
+std::vector<std::string> CSV::GetLines() {
   return lines;
 }
 
-vec<str> CSV::GetLine(int index) {
-  vec<str> v;
+std::vector<std::string> CSV::GetLine(int index) {
+  std::vector<std::string> v;
   if (index >= lines.size())
     return v;
   v = split_string(lines.at(index), separator);
   return v;
 }
 
-vec<str> CSV::GetLine(const str &line) {
+std::vector<std::string> CSV::GetLine(const std::string &line) {
   return split_string(line, separator);
 }
 
 void CSV::Read() {
   filehandler.open(filename, std::ios::in);
-  str line;
+  std::string line;
 
   headers.clear();
   lines.clear();

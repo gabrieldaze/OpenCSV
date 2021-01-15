@@ -5,39 +5,34 @@
 #include <string>
 #include <vector>
 
-template <typename T>
-using vec = std::vector<T>;
-using cfile = std::fstream;
-using str = std::string;
-
 class CSV {
 private:
-  str filename;
-  cfile filehandler;
+  std::string filename;
+  std::fstream filehandler;
   char separator;
   
-  vec<str> headers;
-  vec<str> lines;
+  std::vector<std::string> headers;
+  std::vector<std::string> lines;
 
-  str join_string(const vec<str> &list, const char &divider);
-  vec<str> split_string(const str &text, const char &divider);
-  int index_of(const str &text, const str &search);
+  std::string join_string(const std::vector<std::string> &list, const char &divider);
+  std::vector<std::string> split_string(const std::string &text, const char &divider);
+  int index_of(const std::string &text, const std::string &search);
   
 public:
-  CSV(const str &filename);
-  CSV(const str &filename, const char &divider);
+  CSV(const std::string &filename);
+  CSV(const std::string &filename, const char &divider);
 
-  void PushHeader(const str &header);
-  str PopHeader();
-  vec<str> GetHeaders();
-  str GetHeader(int index);
-  int GetHeaderIndex(const str &header);
+  void PushHeader(const std::string &header);
+  std::string PopHeader();
+  std::vector<std::string> GetHeaders();
+  std::string GetHeader(int index);
+  int GetHeaderIndex(const std::string &header);
 
-  void PushLine(const str &line);
-  str PopLine();
-  vec<str> GetLines();
-  vec<str> GetLine(int index);
-  vec<str> GetLine(const str &line);
+  void PushLine(const std::string &line);
+  std::string PopLine();
+  std::vector<std::string> GetLines();
+  std::vector<std::string> GetLine(int index);
+  std::vector<std::string> GetLine(const std::string &line);
 
   void Read();
   void Write();

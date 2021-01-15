@@ -1,31 +1,31 @@
-#include "csv.hh"
+#include "csv.h"
 
-CSV::CSV(const std::string &file) {
+ocsv::CSV::CSV(const std::string &file) {
   filename = file;
   filehandler = std::fstream();
   separator = ',';
 }
 
-CSV::CSV(const std::string &file, const char &s) {
+ocsv::CSV::CSV(const std::string &file, const char &s) {
   filename = file;
   filehandler = std::fstream();
   separator = s;
 }
 
-int CSV::index_of(const std::string &text, const std::string &search) {
+int ocsv::CSV::index_of(const std::string &text, const std::string &search) {
   std::size_t pos = text.find(search);
   if (pos == std::string::npos) return -1;
   return (int) pos;
 }
 
-std::string CSV::join_string(const std::vector<std::string> &list, const char &divider) {
+std::string ocsv::CSV::join_string(const std::vector<std::string> &list, const char &divider) {
   std::string s = "";
   for (auto &item : list) s += item + std::string(1, divider);
   s = s.substr(0, s.size() - 1);
   return s;
 }
 
-std::vector<std::string> CSV::split_string(const std::string &text, const char &div) {
+std::vector<std::string> ocsv::CSV::split_string(const std::string &text, const char &div) {
   std::vector<std::string> v;
   std::string sub, seq;
 
@@ -46,45 +46,45 @@ std::vector<std::string> CSV::split_string(const std::string &text, const char &
 }
 
 
-void CSV::PushHeader(const std::string &header) {
+void ocsv::CSV::PushHeader(const std::string &header) {
   headers.push_back(header);
 }
 
-std::string CSV::PopHeader() {
+std::string ocsv::CSV::PopHeader() {
   std::string h = headers.back();
   headers.pop_back();
   return h;
 }
 
-std::vector<std::string> CSV::GetHeaders() {
+std::vector<std::string> ocsv::CSV::GetHeaders() {
   return headers;
 }
 
-std::string CSV::GetHeader(int index) {
+std::string ocsv::CSV::GetHeader(int index) {
   return headers.at(index);
 }
 
-int CSV::GetHeaderIndex(const std::string &header) {
+int ocsv::CSV::GetHeaderIndex(const std::string &header) {
   for (int i = 0; i < headers.size(); i++)
     if (header == headers.at(i)) return i;
   return -1;
 }
 
-void CSV::PushLine(const std::string &line) {
+void ocsv::CSV::PushLine(const std::string &line) {
   lines.push_back(line);
 }
 
-std::string CSV::PopLine() {
+std::string ocsv::CSV::PopLine() {
   std::string l = lines.back();
   lines.pop_back();
   return l;
 }
 
-std::vector<std::string> CSV::GetLines() {
+std::vector<std::string> ocsv::CSV::GetLines() {
   return lines;
 }
 
-std::vector<std::string> CSV::GetLine(int index) {
+std::vector<std::string> ocsv::CSV::GetLine(int index) {
   std::vector<std::string> v;
   if (index >= lines.size())
     return v;
@@ -92,11 +92,11 @@ std::vector<std::string> CSV::GetLine(int index) {
   return v;
 }
 
-std::vector<std::string> CSV::GetLine(const std::string &line) {
+std::vector<std::string> ocsv::CSV::GetLine(const std::string &line) {
   return split_string(line, separator);
 }
 
-void CSV::Read() {
+void ocsv::CSV::Read() {
   filehandler.open(filename, std::ios::in);
   std::string line;
 
@@ -110,7 +110,7 @@ void CSV::Read() {
   filehandler.close();
 }
 
-void CSV::Write() {
+void ocsv::CSV::Write() {
   filehandler.open(filename, std::ios::out);
   filehandler << join_string(headers, separator) << "\n";
   for (auto &l : lines) filehandler << l << "\n";

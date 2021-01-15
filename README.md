@@ -10,7 +10,7 @@ Run `cmake --build .` your root folder and it will generate a file named `libcsv
 #include "csv.h"
 
 int main() {
-  CSV c = CSV("myfile.csv");
+  ocsv::CSV c("myfile.csv");
   c.PushHeader("name");
   c.PushHeader("job");
 
@@ -36,7 +36,7 @@ rachell,physician
 #include "csv.h"
 
 int main() {
-  CSV c = CSV("myfile.csv");
+  ocsv::CSV c("myfile.csv");
   c.Read();
   for (auto &h : c.GetHeaders())
     std::cout << h << "\t";

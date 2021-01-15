@@ -3,6 +3,13 @@
 CSV::CSV(const str &file) {
   filename = file;
   filehandler = cfile();
+  separator = ',';
+}
+
+CSV::CSV(const str &file, const char &s) {
+  filename = file;
+  filehandler = cfile();
+  separator = s;
 }
 
 int CSV::index_of(const str &text, const str &search) {
@@ -81,12 +88,12 @@ vec<str> CSV::GetLine(int index) {
   vec<str> v;
   if (index >= lines.size())
     return v;
-  v = split_string(lines.at(index), ',');
+  v = split_string(lines.at(index), separator);
   return v;
 }
 
 vec<str> CSV::GetLine(const str &line) {
-  return split_string(line, ',');
+  return split_string(line, separator);
 }
 
 void CSV::Read() {
@@ -96,7 +103,7 @@ void CSV::Read() {
   headers.clear();
   lines.clear();
   std::getline(filehandler, line);
-  headers = split_string(line, ',');
+  headers = split_string(line, separator);
 
   while (std::getline(filehandler, line))
     lines.push_back(line);
@@ -105,7 +112,7 @@ void CSV::Read() {
 
 void CSV::Write() {
   filehandler.open(filename, std::ios::out);
-  filehandler << join_string(headers, ',') << "\n";
+  filehandler << join_string(headers, separator) << "\n";
   for (auto &l : lines) filehandler << l << "\n";
   filehandler.close();
 }

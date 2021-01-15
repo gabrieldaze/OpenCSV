@@ -14,6 +14,7 @@ class CSV {
 private:
   str filename;
   cfile filehandler;
+  char separator;
   
   vec<str> headers;
   vec<str> lines;
@@ -23,7 +24,8 @@ private:
   int index_of(const str &text, const str &search);
   
 public:
-  CSV(const std::string &filename);
+  CSV(const str &filename);
+  CSV(const str &filename, const char &divider);
 
   void PushHeader(const str &header);
   str PopHeader();

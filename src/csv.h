@@ -8,20 +8,19 @@
 namespace ocsv {
   class CSV {
   private:
-    std::string filename;
-    std::fstream filehandler;
-    char separator;
-  
-    std::vector<std::string> headers;
-    std::vector<std::string> lines;
+    std::string              mFileName;
+    std::fstream             mFileHandler;
+    char                     mSeparator;
+    std::vector<std::string> mHeaders;
+    std::vector<std::string> mLines;
 
     std::string join_string(const std::vector<std::string> &list, const char &divider);
     std::vector<std::string> split_string(const std::string &text, const char &divider);
     int index_of(const std::string &text, const std::string &search);
   
   public:
-    CSV(const std::string &filename);
-    CSV(const std::string &filename, const char &divider);
+    CSV(const std::string &mFileName);
+    CSV(const std::string &mFileName, const char &divider);
 
     void PushHeader(const std::string &header);
     std::string PopHeader();

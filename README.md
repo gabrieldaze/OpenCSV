@@ -1,11 +1,16 @@
 ## OpenCSV
-Simple CSV library written in C++
+Simple CSV library written in **C++**
+It supports **custom delimiters** and **quoting fields**
+
+- [Writing a file](#writing-a-csv-file)
+- [Custom delimiter](#custom-delimiter)
+- [Reading a file](#reading-from-csv-file)
 ## Building
 Run `cmake --build .` your root folder and it will generate a file named `libcsv.a`
 
 ## Usage example
 
-##### Writing a CSV file
+#### Writing a CSV file
 ```cpp
 #include "csv.h"
 
@@ -21,14 +26,21 @@ int main() {
   return 0;
 }
 ```
-##### The output file after writing
+The output file after writing
 ```
 name,job
 gabriel,programmer
 rachell,physician
 ```
 
-##### Reading from CSV file
+#### Custom delimiter
+There is a second constructor that takes a second parater which is the delimiter character
+```cpp
+// CSV(std::string file, const char &delimiter)
+ocsv::CSV c("myfile.csv", ';');
+```
+
+#### Reading from CSV file
 
 ```cpp
 #include <iostream>

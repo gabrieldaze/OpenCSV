@@ -1,5 +1,6 @@
 ## OpenCSV
 Simple CSV library written in **C++**
+
 It supports **custom delimiters** and **quoting fields**
 
 - [Writing a file](#writing-a-csv-file)
